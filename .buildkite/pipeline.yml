@@ -1,8 +1,6 @@
 steps:
   - label: "Set environment"
     command: ".buildkite/set_env.sh"
-      
-
   - input: "Build Specifications"
       fields:
         - text: "Which context?"
