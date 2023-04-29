@@ -2,11 +2,18 @@ steps:
   - label: "Set environment"
     command: ".buildkite/set_env.sh"
 
-  - input: "Build Specifications"
+  - block: "Build Specifications"
+    prompt: "Fill out build details"
     fields:
-      - text: "Which context?"
-        hint: "Options: python-infra"
+      - select: "Which context?"
+        hint: "Context determines the compartment" 
         key: context
+        options:
+          - label: "Infra"
+            value: "python-infra"
       - text: "Which directory?"
         hint: "name of the directory containing the function spec"
         key: "directory"
+
+  - label: "Fn build and push"
+    command: ".buildkite/fn_deploy.sh"
