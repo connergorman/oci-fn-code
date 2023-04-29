@@ -2,8 +2,7 @@ steps:
   - label: "Set environment"
     command: ".buildkite/set_env.sh"
 
-  - label: "user-input"
-    input: "Build Specifications"
+  - input: "Build Specifications"
       fields:
         - text: "Which context?"
           hint: "Options: python-infra"
