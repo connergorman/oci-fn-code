@@ -1,7 +1,6 @@
 steps:
   - label: "Set environment"
     command: ".buildkite/set_env.sh"
-
   - label: "user-input"
     input: "Build Specifications"
       fields:
@@ -11,7 +10,6 @@ steps:
         - text: "Which directory?"
           hint: "name of the directory containing the function spec"
           key: "directory"
-
     - label: "Fn build and push"
       depends_on: "user-input"
       command: ".buildkite/fn_deploy.sh"
