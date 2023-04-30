@@ -54,9 +54,11 @@ def get_object(bucket_name, object_name):
 
 def put_object(bucket_name, object_name, content):
     # Get AWS secret
-    logging.getLogger().info("Starting AWS get creds")
+    logging.getLogger().info("Starting principal signer")
     signer = oci.auth.signers.InstancePrincipalsSecurityTokenSigner()
     client = oci.secrets.SecretsClient(config={}, signer=signer)
+    logging.getLogger().info("Got token")
+    logging.getLogger().info("Trying to get aws creds from vault")
     try:
         response = client.get_secret_bundle(secret_id="ocid1.vaultsecret.oc1.iad.amaaaaaapc6swyaavfxklakk4cgkbii4grau27umnsmxoos5y4t5psqljbba")
         logging.getLogger().info("Got secret from vault")
