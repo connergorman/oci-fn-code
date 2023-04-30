@@ -1,2 +1,4 @@
 fdk
 oci
+boto3
+botocore
