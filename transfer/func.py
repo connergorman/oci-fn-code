@@ -70,11 +70,11 @@ def put_object(bucket_name, object_name, content, signer):
 
     logging.getLogger().info("Get aws client")
     try:
+        os.environ["AWS_DEFAULT_REGION"] = "us-east-1"
         s3_client = boto3.client(
             's3',
             aws_access_key_id='AKIAUMKYHCUXXPUXVX5S',
-            aws_secret_access_key=secret,
-            aws_default_region='us-ashburn-1'
+            aws_secret_access_key=secret
         )
     except Exception as e:
         logging.getLogger().error("AWS client failed")
