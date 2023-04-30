@@ -9,6 +9,7 @@ from fdk import response
 import oci.object_storage
 import boto3
 from botocore.config import Config
+import botocore
 
 def handler(ctx, data: io.BytesIO=None):
     try:
@@ -84,7 +85,7 @@ def put_object(bucket_name, object_name, content, signer):
     try:
         response = s3_client.put_object(Body=bytes(content), Bucket=bucket_name, Key=object_name)
         logging.getLogger().info("Put successful")
-    except boto3.ClientError as e:
+    except botocore.exceptions.ClientError as e:
         logging.getLogger().error("AWS s3 failed")
         return False
     return True
