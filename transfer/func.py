@@ -18,7 +18,9 @@ def handler(ctx, data: io.BytesIO=None):
     except Exception:
         error = 'Input a JSON object in the format: \'{"bucketName": "<bucket name>"}, "objectName": "<object name>"}\' '
         raise Exception(body)
-    get_resp = get_object(bucket_name, object_name)
+    signer = oci.auth.signers.get_resource_principals_signer()
+    get_resp = get_object(bucket_name, object_name, signer)
+
     put_resp = put_object("receive-from-oci", object_name, get_resp["content"])
     if put_resp == False:
         logging.getLogger().error("Upload failed")
@@ -33,8 +35,8 @@ def handler(ctx, data: io.BytesIO=None):
         headers={"Content-Type": "application/json"}
     )
 
-def get_object(bucket_name, object_name):
-    signer = oci.auth.signers.get_resource_principals_signer()
+def get_object(bucket_name, object_name, signer):
+    
     client = oci.object_storage.ObjectStorageClient(config={}, signer=signer)
     namespace = client.get_namespace().data
     try:
@@ -52,10 +54,9 @@ def get_object(bucket_name, object_name):
     return { "content": message }
 
 
-def put_object(bucket_name, object_name, content):
+def put_object(bucket_name, object_name, content, signer):
     # Get AWS secret
     logging.getLogger().info("Starting principal signer")
-    signer = oci.auth.signers.InstancePrincipalsSecurityTokenSigner()
     client = oci.secrets.SecretsClient(config={}, signer=signer)
     logging.getLogger().info("Got token")
     logging.getLogger().info("Trying to get aws creds from vault")
