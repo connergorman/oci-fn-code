@@ -83,7 +83,7 @@ def put_object(bucket_name, object_name, content, signer):
 
         
     try:
-        response = s3_client.put_object(Body=bytes(content), Bucket=bucket_name, Key=object_name)
+        response = s3_client.put_object(Body=bytes(content, encoding='utf8'), Bucket=bucket_name, Key=object_name)
         logging.getLogger().info("Put successful")
     except botocore.exceptions.ClientError as e:
         logging.getLogger().error("AWS s3 failed")
