@@ -18,7 +18,7 @@ def handler(ctx, data: io.BytesIO=None):
         error = 'Input a JSON object in the format: \'{"bucketName": "<bucket name>"}, "objectName": "<object name>"}\' '
         raise Exception(body)
     get_resp = get_object(bucket_name, object_name)
-    put_resp = put_object("receive-from-oci", object_name, get_resp.content)
+    put_resp = put_object("receive-from-oci", object_name, get_resp["content"])
     return response.Response(
         ctx,
         response_data=json.dumps(put_resp),
