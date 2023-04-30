@@ -21,7 +21,7 @@ def handler(ctx, data: io.BytesIO=None):
     signer = oci.auth.signers.get_resource_principals_signer()
     get_resp = get_object(bucket_name, object_name, signer)
 
-    put_resp = put_object("receive-from-oci", object_name, get_resp["content"])
+    put_resp = put_object("receive-from-oci", object_name, get_resp["content"], signer)
     if put_resp == False:
         logging.getLogger().error("Upload failed")
         return response.Response(
