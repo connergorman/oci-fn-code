@@ -12,8 +12,8 @@ from botocore.config import Config
 def handler(ctx, data: io.BytesIO=None):
     try:
         body = json.loads(data.getvalue())
-        bucket_name = body["bucketName"]
-        object_name = body["objectName"]
+        bucket_name = body["data"]["additionalDetails"]["bucketName"]
+        object_name = body["data"]["resourceName"]
     except Exception:
         error = 'Input a JSON object in the format: \'{"bucketName": "<bucket name>"}, "objectName": "<object name>"}\' '
         raise Exception(body)
