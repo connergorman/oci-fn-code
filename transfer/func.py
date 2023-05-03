@@ -12,6 +12,7 @@ from botocore.config import Config
 import botocore
 
 def handler(ctx, data: io.BytesIO=None):
+    # this is a new comment
     try:
         body = json.loads(data.getvalue())
         bucket_name = body["data"]["additionalDetails"]["bucketName"]
