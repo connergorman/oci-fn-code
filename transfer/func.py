@@ -4,6 +4,7 @@ import json
 import sys
 import base64
 import logging
+import warnings
 
 from fdk import response
 import oci.object_storage
